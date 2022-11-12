@@ -4,7 +4,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.generics import ListAPIView
 
 from .models import Storage
-from .serializers import StorageSerializer, StorageListSerializer,StorageCreateSerializer
+from .serializers import  StorageListSerializer,StorageCreateSerializer
 from django_filters import rest_framework as rest_filter
 
 from .permissions import IsOwner
@@ -19,7 +19,7 @@ class StorageViewSet(mixins.CreateModelMixin,
                    mixins.ListModelMixin,
                    GenericViewSet):
     queryset = Storage.objects.all()
-    serializer_class = StorageSerializer
+    serializer_class = StorageListSerializer
     filter_backends = [filters.SearchFilter,
     rest_filter.DjangoFilterBackend,
     filters.OrderingFilter]
@@ -53,12 +53,12 @@ class StorageViewSet(mixins.CreateModelMixin,
 
 class FindViewSet(ListAPIView):
     queryset = Storage.objects.filter(storage='find')
-    serializer_class = StorageSerializer
+    serializer_class = StorageListSerializer
 
 
 class LostViewSet(ListAPIView):
     queryset = Storage.objects.filter(storage='lost')
-    serializer_class = StorageSerializer
+    serializer_class = StorageListSerializer
 
 
 

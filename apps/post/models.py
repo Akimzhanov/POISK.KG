@@ -38,14 +38,6 @@ class Storage(models.Model):
         max_length=20,
         choices=STORAGE_CHOICES
     )
-    # storage = models.ForeignKey(
-    #     choices=STORAGE_CHOICES,
-    #     to='self',
-    #     on_delete=models.CASCADE,
-    #     related_name='storages',
-    #     blank=True,
-        # choices=STORAGE_CHOICES,
-    # )
     user = models.ForeignKey(
         verbose_name='Автор поста',
         to=User,
@@ -66,6 +58,8 @@ class Storage(models.Model):
         choices=CATEGORY_CHOICES
     )
     address = models.CharField(max_length=100, choices=ADDRESS_CHOICES)
+    whatsapp = models.CharField(max_length=13)
+    telegram = models.CharField(max_length=100)
     date = models.DateField(verbose_name='Дата находки')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -1,8 +1,10 @@
 from rest_framework.viewsets import mixins, GenericViewSet
-from rest_framework import filters
+from rest_framework import filters, status
 from rest_framework.permissions import AllowAny
 from rest_framework.generics import ListAPIView
-
+from rest_framework.views import APIView
+from rest_framework.request import Request
+from rest_framework.response import Response
 from .models import Storage
 from .serializers import  StorageListSerializer,StorageCreateSerializer
 from django_filters import rest_framework as rest_filter
@@ -26,6 +28,14 @@ class StorageViewSet(mixins.CreateModelMixin,
     search_fields = ['title']
     filterset_fields = ['category']
     ordering_fields = ['created_at']
+
+    def post(self, request: Request):
+        serializer = StorageCreateSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response('Спасибо за регистрацию.',
+            status=status.HTTP_201_CREATED
+            )
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

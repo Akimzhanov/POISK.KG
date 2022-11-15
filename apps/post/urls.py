@@ -5,8 +5,6 @@ from .views import StorageViewSet, FindViewSet, LostViewSet
 
 router = DefaultRouter()
 router.register('post', StorageViewSet, 'post')
-# router.register('find-list', FindViewSet, 'find')
-# router.register('lost-list', LostViewSet, 'lost')
 
 urlpatterns = [
     path('find-list/', FindViewSet.as_view(), name='find'),

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import Storage
-
+from .utils import normalize_phone
 
 class StorageListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,6 +33,13 @@ class StorageCreateSerializer(serializers.ModelSerializer):
         model = Storage
         fields = '__all__'
         
+    def validate_whatsapp(self, whatsapp):
+        whatsapp = normalize_phone(whatsapp)
+        if len(whatsapp) != 13:
+            raise serializers.ValidationError('Не верный формат телефона')
+        return whatsapp 
+        
     def create(self, validated_data):
         post = Storage.objects.create(**validated_data)
         return post
+

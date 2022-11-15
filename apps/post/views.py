@@ -29,13 +29,6 @@ class StorageViewSet(mixins.CreateModelMixin,
     filterset_fields = ['category']
     ordering_fields = ['created_at']
 
-    def post(self, request: Request):
-        serializer = StorageCreateSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response('Спасибо за регистрацию.',
-            status=status.HTTP_201_CREATED
-            )
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
